@@ -1,4 +1,4 @@
-package adapter
+package slice
 
 import (
 	"fmt"
@@ -6,9 +6,7 @@ import (
 	"reflect"
 )
 
-// SliceAdapter
-//Deprecated
-func SliceAdapter(source any) paginate.IAdapter {
+func Adapter(source any) paginate.IAdapter {
 	if isPtr(source) || !isSlice(source) {
 		panic(fmt.Sprintf("expected slice but got %s", reflect.TypeOf(source).Kind()))
 	}

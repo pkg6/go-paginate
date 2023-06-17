@@ -6,7 +6,7 @@ import (
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/pkg6/go-paginate"
-	"github.com/pkg6/go-paginate/adapter"
+	xorm2 "github.com/pkg6/go-paginate/xorm"
 	"xorm.io/xorm"
 )
 
@@ -31,7 +31,7 @@ func init() {
 func Total() {
 	session := engine.Table(Post{})
 	var dest []Post
-	var adapt = adapter.XORMAdapter(session)
+	var adapt = xorm2.Adapter(session)
 	total, _ := adapt.Length()
 	myPage := paginate.TotalPaginate(adapt, 10, 1, total)
 	_ = myPage.Get(&dest)

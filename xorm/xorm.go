@@ -1,4 +1,4 @@
-package adapter
+package xorm
 
 import (
 	"github.com/pkg6/go-paginate"
@@ -9,9 +9,7 @@ type XORM struct {
 	session *xorm.Session
 }
 
-// XORMAdapter
-//Deprecated
-func XORMAdapter(session *xorm.Session) paginate.IAdapter {
+func Adapter(session *xorm.Session) paginate.IAdapter {
 	return &XORM{session: session}
 }
 
