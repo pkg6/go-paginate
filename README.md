@@ -22,7 +22,7 @@ import (
 	"encoding/xml"
 	"fmt"
 	"github.com/pkg6/go-paginate"
-	"github.com/pkg6/go-paginate/adapter"
+	gorm2 "github.com/pkg6/go-paginate/gorm"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -51,30 +51,10 @@ func init() {
 		db.Save(&p)
 	}
 }
-func simple() {
-	q := db.Model(Post{})
-	var dest []Post
-	var adapt = adapter.GORMAdapter(q)
-	myPage := paginate.SimplePaginate(adapt, 10, 1)
-	_ = myPage.Get(&dest)
-	//获取最后页码
-	page, err := myPage.GetLastPage()
-	fmt.Println(fmt.Sprintf("获取最后页码:%v", page))
-	fmt.Println(fmt.Sprintf("获取最后页码错误信息:%v", err))
-	//获取总数
-	total, err := myPage.GetTotal()
-	fmt.Println(fmt.Sprintf("获取总数:%v", total))
-	fmt.Println(fmt.Sprintf("获取总数错误信息:%v", err))
-	fmt.Println(fmt.Sprintf("当前页码:%v", myPage.GetCurrentPage()))
-	fmt.Println(fmt.Sprintf("每页显示多少条数:%v", myPage.GetListRows()))
-	fmt.Println(fmt.Sprintf("是否还可以进行分页:%v", myPage.HasPages()))
-	fmt.Println(dest)
-}
-
 func Total() {
 	q := db.Model(Post{}).Where([]int64{20, 21, 22}).Order("id desc")
 	var dest []Post
-	var adapt = adapter.GORMAdapter(q)
+	var adapt = gorm2.Adapter(q)
 	t, _ := adapt.Length()
 	myPage := paginate.TotalPaginate(adapt, 10, 1, t)
 	_ = myPage.Get(&dest)
@@ -107,7 +87,6 @@ func Total() {
 
 func main() {
 	Total()
-	simple()
 }
 ~~~
 
@@ -135,7 +114,7 @@ var db, _ = gorm.Open(sqlite.Open("gorm.db?cache=shared"), &gorm.Config{
 })
 q := db.Model(Post{}).Where([]int64{20, 21, 22}).Order("id desc")
 var dest []Post
-var adapt = adapter.GORMAdapter(q)
+var adapt = grom2.Adapter(q)
 t, _ := adapt.Length()
 myPage := paginate.TotalPaginate(adapt, 10, 1, t)
 ~~~
@@ -145,7 +124,7 @@ myPage := paginate.TotalPaginate(adapt, 10, 1, t)
 var engine, _ = xorm.NewEngine("sqlite3", "xorm.db")
 session := engine.Table(Post{})
 var dest []Post
-var adapt = adapter.XORMAdapter(session)
+var adapt = xorm2.Adapter(session)
 total, _ := adapt.Length()
 myPage := paginate.TotalPaginate(adapt, 10, 1, total)
 ~~~
@@ -158,7 +137,7 @@ var source = []int{
 	111, 222, 333, 444, 555, 666, 777, 888, 999, 199,
 	1111, 2222,
 }
-var adapt = adapter.SliceAdapter(source)
+var adapt = slice.Adapter(source)
 myPage := paginate.SimplePaginate(adapt, 10, 5)
 ~~~
 

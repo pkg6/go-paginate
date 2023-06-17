@@ -1,4 +1,4 @@
-package adapter
+package gorm
 
 import (
 	"github.com/pkg6/go-paginate"
@@ -9,9 +9,7 @@ type GORM struct {
 	db *gorm.DB
 }
 
-// GORMAdapter
-//Deprecated
-func GORMAdapter(db *gorm.DB) paginate.IAdapter {
+func Adapter(db *gorm.DB) paginate.IAdapter {
 	return &GORM{db: db}
 }
 

@@ -5,7 +5,7 @@ import (
 	"encoding/xml"
 	"fmt"
 	"github.com/pkg6/go-paginate"
-	"github.com/pkg6/go-paginate/adapter"
+	gorm2 "github.com/pkg6/go-paginate/gorm"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -37,7 +37,7 @@ func init() {
 func simple() {
 	q := db.Model(Post{})
 	var dest []Post
-	var adapt = adapter.GORMAdapter(q)
+	var adapt = gorm2.Adapter(q)
 	myPage := paginate.SimplePaginate(adapt, 10, 1)
 	_ = myPage.Get(&dest)
 	//获取最后页码
@@ -57,7 +57,7 @@ func simple() {
 func Total() {
 	q := db.Model(Post{}).Where([]int64{20, 21, 22}).Order("id desc")
 	var dest []Post
-	var adapt = adapter.GORMAdapter(q)
+	var adapt = gorm2.Adapter(q)
 	t, _ := adapt.Length()
 	myPage := paginate.TotalPaginate(adapt, 10, 1, t)
 	_ = myPage.Get(&dest)
