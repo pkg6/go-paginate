@@ -1,5 +1,10 @@
 package paginate
 
+var (
+	DefaultRequestMaxSize int64 = 50
+	DefaultRequestSize    int64 = 20
+)
+
 type IRequest interface {
 	// GetPage 获取当前页数
 	GetPage() int64
@@ -9,7 +14,7 @@ type IRequest interface {
 	MaxSize() int64
 }
 
-func Total(adapt IAdapter, request IRequest) IPaginate {
+func TotalRequest(adapt IAdapter, request IRequest) IPaginate {
 	total, _ := adapt.Length()
 	size := request.GetSize()
 	if maxSize := request.MaxSize(); maxSize > 0 {
@@ -20,14 +25,9 @@ func Total(adapt IAdapter, request IRequest) IPaginate {
 	return TotalPaginate(adapt, size, request.GetPage(), total)
 }
 
-var (
-	DefaultRequestMaxSize int64 = 50
-	DefaultRequestSize    int64 = 20
-)
-
 type Request struct {
-	Page int64 `json:"page" form:"page" uri:"page" query:"page" xml:"Page"`
-	Size int64 `json:"size" form:"size" uri:"size" query:"size" xml:"Size"`
+	Page int64 `json:"page" form:"page" param:"page" uri:"page" query:"page" xml:"Page"`
+	Size int64 `json:"size" form:"size" param:"size" uri:"size" query:"size" xml:"Size"`
 }
 
 func (r *Request) GetPage() int64 {

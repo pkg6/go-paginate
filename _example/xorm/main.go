@@ -6,16 +6,16 @@ import (
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/pkg6/go-paginate"
-	xorm2 "github.com/pkg6/go-paginate/xorm"
+	"github.com/pkg6/go-paginate/xormp"
 	"xorm.io/xorm"
 )
 
 type Post struct {
-	ID     uint `xorm:"pk autoincr"`
+	ID     uint `xormp:"pk autoincr"`
 	Number int
 }
 
-var engine, _ = xorm.NewEngine("sqlite3", "xorm.db")
+var engine, _ = xorm.NewEngine("sqlite3", "xormp.db")
 
 func init() {
 	err := engine.Sync(new(Post))
@@ -31,7 +31,7 @@ func init() {
 func Total() {
 	session := engine.Table(Post{})
 	var dest []Post
-	var adapt = xorm2.Adapter(session)
+	var adapt = xormp.Adapter(session)
 	total, _ := adapt.Length()
 	myPage := paginate.TotalPaginate(adapt, 10, 1, total)
 	_ = myPage.Get(&dest)
