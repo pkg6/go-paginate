@@ -1,4 +1,4 @@
-package slice
+package slicep
 
 import (
 	"fmt"
@@ -8,7 +8,7 @@ import (
 
 func Adapter(source any) paginate.IAdapter {
 	if isPtr(source) || !isSlice(source) {
-		panic(fmt.Sprintf("expected slice but got %s", reflect.TypeOf(source).Kind()))
+		panic(fmt.Sprintf("expected slicep but got %s", reflect.TypeOf(source).Kind()))
 	}
 	return &Slice{src: source}
 }
@@ -64,7 +64,7 @@ func makeSlice(data interface{}, length, cap int) error {
 		return fmt.Errorf("expected to be a ptr but got %T", data)
 	}
 	if !isSlice(data) {
-		return fmt.Errorf("expected to be a slice pointer but got %T", data)
+		return fmt.Errorf("expected to be a slicep pointer but got %T", data)
 	}
 	ind := reflect.Indirect(reflect.ValueOf(data))
 	typ := reflect.TypeOf(ind.Interface())

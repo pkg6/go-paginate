@@ -1,4 +1,4 @@
-package gorm
+package gormp
 
 import (
 	"github.com/pkg6/go-paginate"
