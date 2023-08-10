@@ -1,4 +1,4 @@
-package xorm
+package xormp
 
 import (
 	"github.com/pkg6/go-paginate"

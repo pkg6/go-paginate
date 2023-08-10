@@ -5,23 +5,23 @@ import (
 	"encoding/xml"
 	"fmt"
 	"github.com/pkg6/go-paginate"
-	gorm2 "github.com/pkg6/go-paginate/gorm"
+	"github.com/pkg6/go-paginate/gormp"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )
 
 type Post struct {
-	ID     uint `gorm:"primarykey" json:"id"`
+	ID     uint `gormp:"primarykey" json:"id"`
 	Number int  `json:"number"`
 }
 type PostIndex struct {
-	ID     uint `gorm:"primarykey" json:"id"`
+	ID     uint `gormp:"primarykey" json:"id"`
 	Number int  `json:"number"`
 	Index  int  `json:"index"`
 }
 
-var db, _ = gorm.Open(sqlite.Open("gorm.db?cache=shared"), &gorm.Config{
+var db, _ = gorm.Open(sqlite.Open("gormp.db?cache=shared"), &gorm.Config{
 	Logger: logger.Default.LogMode(logger.Info),
 })
 
@@ -37,7 +37,7 @@ func init() {
 func simple() {
 	q := db.Model(Post{})
 	var dest []Post
-	var adapt = gorm2.Adapter(q)
+	var adapt = gormp.Adapter(q)
 	myPage := paginate.SimplePaginate(adapt, 10, 1)
 	_ = myPage.Get(&dest)
 	//获取最后页码
@@ -57,7 +57,7 @@ func simple() {
 func Total() {
 	q := db.Model(Post{}).Where([]int64{20, 21, 22}).Order("id desc")
 	var dest []Post
-	var adapt = gorm2.Adapter(q)
+	var adapt = gormp.Adapter(q)
 	t, _ := adapt.Length()
 	myPage := paginate.TotalPaginate(adapt, 10, 1, t)
 	_ = myPage.Get(&dest)

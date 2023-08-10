@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/pkg6/go-paginate"
-	"github.com/pkg6/go-paginate/slice"
+	"github.com/pkg6/go-paginate/slicep"
 )
 
 var source = []int{
@@ -12,7 +12,7 @@ var source = []int{
 	111, 222, 333, 444, 555, 666, 777, 888, 999, 199,
 	1111, 2222,
 }
-var adapt = slice.Adapter(source)
+var adapt = slicep.Adapter(source)
 
 func Simple() {
 	myPage := paginate.SimplePaginate(adapt, 10, 5)

@@ -1,4 +1,4 @@
-package slice
+package slicep
 
 import (
 	"github.com/pkg6/go-paginate"
