@@ -19,7 +19,7 @@ func TestSliceAdapter(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := SliceAdapter(tt.args.source); !reflect.DeepEqual(got, tt.want) {
+			if got := Adapter(tt.args.source); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("SliceAdapter() = %v, want %v", got, tt.want)
 			}
 		})
