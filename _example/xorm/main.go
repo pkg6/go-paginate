@@ -55,8 +55,6 @@ func Total() {
 }
 
 func main() {
-	//iniDB()
 	engine.ShowSQL(true)
-	//iniDB()
 	Total()
 }
