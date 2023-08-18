@@ -3,7 +3,7 @@ A simple way to implement pagination in Golang.
 [![Go Report Card](https://goreportcard.com/badge/github.com/pkg6/go-paginate)](https://goreportcard.com/report/github.com/pkg6/go-paginate)
 [![Go.Dev reference](https://img.shields.io/badge/go.dev-reference-blue?logo=go&logoColor=white)](https://pkg.go.dev/github.com/pkg6/go-paginate?tab=doc)
 [![Sourcegraph](https://sourcegraph.com/github.com/pkg6/go-paginate/-/badge.svg)](https://sourcegraph.com/github.com/pkg6/go-paginate?badge)
-[![Release](https://img.shields.io/github/release/pkg6/go-paginator.svg?style=flat-square)](https://github.com/pkg6/go-paginate/releases)
+[![Release](https://img.shields.io/github/release/pkg6/go-paginate.svg?style=flat-square)](https://github.com/pkg6/go-paginate/releases)
 [![Goproxy.cn](https://goproxy.cn/stats/github.com/pkg6/go-paginate/badges/download-count.svg)](https://goproxy.cn)
 
 ## Install
