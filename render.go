@@ -15,6 +15,8 @@ type IRender interface {
 	SetData(data any)
 	// SetHasMore 是否可以进行下一页
 	SetHasMore(hasMore bool)
+
+	Render() any
 }
 
 type Render struct {
@@ -60,4 +62,7 @@ func (r *Render) SetData(data any) {
 
 func (r *Render) SetHasMore(hasMore bool) {
 	r.HasMore = hasMore
+}
+func (r *Render) Render() any {
+	return r
 }
