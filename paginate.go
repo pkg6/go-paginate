@@ -35,12 +35,15 @@ type IPaginate interface {
 	// Get 获取数据
 	Get(data any) error
 	// Render 获取Paginate结构体数据
-	Render(data any) IRender
+	Render(data any) any
 }
 type Paginate struct {
-	simple bool
 	//数据集适配器
 	adapter IAdapter
+	//渲染
+	render IRender
+	// 模式
+	simple bool
 	//设置输出源
 	Data any
 	//当前页
@@ -53,8 +56,6 @@ type Paginate struct {
 	listRows int64
 	//是否有下一页
 	hasMore bool
-	//渲染
-	render IRender
 }
 
 func SimplePaginate(adapter IAdapter, listRows, currentPage int64) IPaginate {
@@ -77,6 +78,7 @@ func Make(adapter IAdapter, listRows int64, currentPage int64, total int64, simp
 		if err != nil {
 			panic(err)
 		}
+		p.total = count
 		p.hasMore = count > p.currentPage
 	} else {
 		p.total = total
@@ -128,9 +130,6 @@ func (p *Paginate) SetCurrentPage(currentPage int64) {
 
 // GetTotal 获取数据总条数
 func (p *Paginate) GetTotal() (int64, error) {
-	if p.simple {
-		return 0, errors.New("not support total")
-	}
 	return p.total, nil
 }
 
@@ -178,7 +177,7 @@ func (p *Paginate) initData(dest any) any {
 }
 
 // Render 渲染数据
-func (p *Paginate) Render(data any) IRender {
+func (p *Paginate) Render(data any) any {
 	total, _ := p.GetTotal()
 	p.render.SetTotal(total)
 	p.render.SetSimple(p.simple)
@@ -188,22 +187,22 @@ func (p *Paginate) Render(data any) IRender {
 	lastPage, _ := p.GetLastPage()
 	p.render.SetLastPage(lastPage)
 	if data == nil && p.Data == nil {
-		return p.render
+		return p.render.Render()
 	}
 	if data != nil && p.Data == nil {
 		if err := p.Get(data); err != nil {
 			panic(err)
 		}
 		p.render.SetData(data)
-		return p.render
+		return p.render.Render()
 	}
 	if data == nil && p.Data != nil {
 		p.render.SetData(p.Data)
-		return p.render
+		return p.render.Render()
 	}
 	if data != nil && p.Data != nil {
 		p.render.SetData(data)
-		return p.render
+		return p.render.Render()
 	}
-	return p.render
+	return p.render.Render()
 }
