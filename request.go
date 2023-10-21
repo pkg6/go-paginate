@@ -25,6 +25,16 @@ func TotalRequest(adapt IAdapter, request IRequest) IPaginate {
 	return TotalPaginate(adapt, size, request.GetPage(), total)
 }
 
+func SimpleRequest(adapt IAdapter, request IRequest) IPaginate {
+	size := request.GetSize()
+	if maxSize := request.MaxSize(); maxSize > 0 {
+		if size > maxSize {
+			size = maxSize
+		}
+	}
+	return SimplePaginate(adapt, size, request.GetPage())
+}
+
 type Request struct {
 	Page int64 `json:"page" form:"page" param:"page" uri:"page" query:"page" xml:"Page"`
 	Size int64 `json:"size" form:"size" param:"size" uri:"size" query:"size" xml:"Size"`
